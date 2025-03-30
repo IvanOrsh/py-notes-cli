@@ -26,3 +26,15 @@ def delete(note_app: NoteApp, title: str):
     """Delete a note by title."""
     result = note_app.delete_notes(title)
     click.echo(result)
+
+@cli.command(name="list")
+@click.option("--page", default=1, help="Page number to view", type=int)
+@click.option("--limit", default=5, help="Number of notes per page", type=int)
+@click.pass_obj
+def list_notes(note_app: NoteApp, page, limit):
+    """List notes with pagination."""
+    try:
+        result = note_app.view_notes(page, limit)
+        click.echo(result)
+    except Exception as e:
+        click.echo(f"Error: {e}")
